@@ -1,4 +1,5 @@
-import { StyleSheet,} from 'react-native';
+import { StyleSheet, } from 'react-native';
+
 import CategoriesScreen from './src/screens/CategoriesScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -7,6 +8,7 @@ import FoodDetailScreen from './src/screens/FoodDetailScreen';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import FavoritesScreen from './src/screens/FavoritesScreen';
 import { Ionicons } from '@expo/vector-icons';
+import FavoritesContextProvider from './src/store/favoritescontext';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -44,29 +46,31 @@ function DrawerNavigator() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: { backgroundColor: 'blue' },
-          headerTintColor: 'white',
-          contentStyle: { backgroundColor: 'lightblue' },
-        }}
-      >
-        <Stack.Screen
-          name="Drawer"
-          component={DrawerNavigator}
-          options={{
-            headerShown: false,
+      <FavoritesContextProvider>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: 'blue' },
+            headerTintColor: 'white',
+            contentStyle: { backgroundColor: 'lightblue' },
           }}
-        />
-        <Stack.Screen name="FoodOverview" component={FoodOverviewScreen} />
-        <Stack.Screen
-          name="FoodDetail"
-          component={FoodDetailScreen}
-          options={{
-            title: 'İçerik',
-          }}
-        />
-      </Stack.Navigator>
+        >
+          <Stack.Screen
+            name="Drawer"
+            component={DrawerNavigator}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen name="FoodOverview" component={FoodOverviewScreen} />
+          <Stack.Screen
+            name="FoodDetail"
+            component={FoodDetailScreen}
+            options={{
+              title: 'İçerik',
+            }}
+          />
+        </Stack.Navigator>
+      </FavoritesContextProvider>
     </NavigationContainer>
   );
 }
