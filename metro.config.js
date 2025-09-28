@@ -1,7 +1,4 @@
-const { getDefaultConfig } = require("expo/metro-config");
+// Learn more https://docs.expo.io/guides/customizing-metro
+const { getDefaultConfig } = require('expo/metro-config');
 
-module.exports = (async () => {
-  const config = await getDefaultConfig(__dirname);
-  config.watchFolders = []; 
-  return config;
-})();
+module.exports = getDefaultConfig(__dirname);

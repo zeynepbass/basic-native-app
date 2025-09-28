@@ -1,27 +1,35 @@
-import { StyleSheet, Text, View, ScrollView, Image,Pressable } from 'react-native';
-import React from 'react';
-import { AntDesign } from '@expo/vector-icons';
+import { Pressable, View, Text, Image, ScrollView, StyleSheet } from 'react-native';
+
+import { useLayoutEffect } from 'react';
+import { Ionicons } from '@expo/vector-icons';
+
 import { FOODS } from '../data/dummy-data';
 import FoodIngredients from '../components/FoodIngredients';
-import {useLayoutEffect } from "react";
-export default function FoodDetailScreen({ route,navigation }) {
+
+export default function FoodDetailScreen({ route, navigation }) {
   const foodId = route.params.foodId;
   const selectedFood = FOODS.find((food) => food.id === foodId);
+  console.log(selectedFood);
 
-  const pressHandler=()=>{
-    console.log("tıklandı")
-  }
+  const pressHandler = () => {
+    console.log('Tıklandı!');
+  };
+
   useLayoutEffect(() => {
-
     navigation.setOptions({
-      headerRight: ()=>{
-        return   <Pressable onPress={pressHandler} style={({pressed})=>(pressed ? styles.pressed : null )}> 
-            <AntDesign name="star" size={24} color="white"></AntDesign>
-        </Pressable>
-        
+      headerRight: () => {
+        return (
+          <Pressable
+            onPress={pressHandler}
+            style={({ pressed }) => (pressed ? styles.pressed : null)}
+          >
+            <Ionicons name="ios-star-half" size={24} color="white" />
+          </Pressable>
+        );
       },
     });
   }, [navigation]);
+
   return (
     <ScrollView style={styles.rootContainer}>
       <Image style={styles.image} source={{ uri: selectedFood.imageUrl }} />
@@ -82,7 +90,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
   },
-  pressed:{
-    opacity:0.5
-  }
+  pressed: {
+    opacity: 0.5,
+  },
 });

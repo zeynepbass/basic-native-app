@@ -1,8 +1,8 @@
-import { View, FlatList, StyleSheet } from "react-native";
-import {useLayoutEffect } from "react";
-import React from "react";
-import { FOODS, CATEGORIES } from "../data/dummy-data";
-import FoodItem from "../components/FoodItem";
+import { StyleSheet, View, FlatList } from 'react-native';
+import React from 'react';
+import { FOODS, CATEGORIES } from '../data/dummy-data';
+import FoodItem from '../components/FoodItem';
+import { useLayoutEffect } from 'react';
 
 export default function FoodOverviewScreen({ route, navigation }) {
   const categoryId = route.params.categoryId;
@@ -11,13 +11,16 @@ export default function FoodOverviewScreen({ route, navigation }) {
   });
 
   useLayoutEffect(() => {
-    const categoryTtile = CATEGORIES.find(
-      (item) => item.id === categoryId
+    const categoryTitle = CATEGORIES.find(
+      (category) => category.id === categoryId
     ).title;
+
     navigation.setOptions({
-      title: categoryTtile,
+      title: categoryTitle,
     });
   }, [navigation, categoryId]);
+
+  //   console.log(displayedFoods);
 
   function renderFoodItem(itemData) {
     console.log(itemData.item);
