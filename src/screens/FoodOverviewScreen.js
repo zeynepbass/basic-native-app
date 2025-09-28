@@ -1,14 +1,23 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native';
-import React from 'react';
-import { FOODS } from '../data/dummy-data';
-import FoodItem from '../components/FoodItem';
+import { View, FlatList, StyleSheet } from "react-native";
+import {useLayoutEffect } from "react";
+import React from "react";
+import { FOODS, CATEGORIES } from "../data/dummy-data";
+import FoodItem from "../components/FoodItem";
 
-export default function FoodOverviewScreen({ route }) {
+export default function FoodOverviewScreen({ route, navigation }) {
   const categoryId = route.params.categoryId;
   const displayedFoods = FOODS.filter((foodItem) => {
     return foodItem.categoryIds.indexOf(categoryId) >= 0;
   });
-  //   console.log(displayedFoods);
+
+  useLayoutEffect(() => {
+    const categoryTtile = CATEGORIES.find(
+      (item) => item.id === categoryId
+    ).title;
+    navigation.setOptions({
+      title: categoryTtile,
+    });
+  }, [navigation, categoryId]);
 
   function renderFoodItem(itemData) {
     console.log(itemData.item);
