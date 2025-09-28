@@ -1,14 +1,27 @@
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image,Pressable } from 'react-native';
 import React from 'react';
-
+import { AntDesign } from '@expo/vector-icons';
 import { FOODS } from '../data/dummy-data';
 import FoodIngredients from '../components/FoodIngredients';
-
-export default function FoodDetailScreen({ route }) {
+import {useLayoutEffect } from "react";
+export default function FoodDetailScreen({ route,navigation }) {
   const foodId = route.params.foodId;
   const selectedFood = FOODS.find((food) => food.id === foodId);
-  console.log(selectedFood);
 
+  const pressHandler=()=>{
+    console.log("tıklandı")
+  }
+  useLayoutEffect(() => {
+
+    navigation.setOptions({
+      headerRight: ()=>{
+        return   <Pressable onPress={pressHandler} style={({pressed})=>(pressed ? styles.pressed : null )}> 
+            <AntDesign name="star" size={24} color="white"></AntDesign>
+        </Pressable>
+        
+      },
+    });
+  }, [navigation]);
   return (
     <ScrollView style={styles.rootContainer}>
       <Image style={styles.image} source={{ uri: selectedFood.imageUrl }} />
@@ -69,4 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
   },
+  pressed:{
+    opacity:0.5
+  }
 });
