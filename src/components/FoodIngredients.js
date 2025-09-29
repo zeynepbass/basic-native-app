@@ -10,7 +10,7 @@ const FoodIngredients = ({data}) => {
 }
 const styles = StyleSheet.create({
     listItem: {
-      backgroundColor: 'orange',
+      backgroundColor: '#F4F4F2',
       marginVertical: 4,
       marginHorizontal: 12,
       borderRadius: 10,

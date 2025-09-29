@@ -1,12 +1,14 @@
 import { Pressable, View, Text, Image, ScrollView, StyleSheet } from 'react-native';
 
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect,useContext } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 
 import { FOODS } from '../data/dummy-data';
 import FoodIngredients from '../components/FoodIngredients';
+import { FavoritesContext } from '../store/favoritescontext';
 
 export default function FoodDetailScreen({ route, navigation }) {
+  const favouriFoodContext=useContext(FavoritesContext);
   const foodId = route.params.foodId;
   const selectedFood = FOODS.find((food) => food.id === foodId);
   console.log(selectedFood);
@@ -14,7 +16,15 @@ export default function FoodDetailScreen({ route, navigation }) {
   const pressHandler = () => {
     console.log('Tıklandı!');
   };
-
+  const changeFavorite=()=>{
+    if(foodIsFavorite){
+      favouriFoodContext.removeFavorite(foodId);
+    }
+    else{
+      favouriFoodContext.addFavorite(foodId);
+    }
+  }
+const foodIsFavorite=favouriFoodContext.ids.includes(foodId);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
@@ -23,12 +33,12 @@ export default function FoodDetailScreen({ route, navigation }) {
             onPress={pressHandler}
             style={({ pressed }) => (pressed ? styles.pressed : null)}
           >
-            <Ionicons name="ios-star-half" size={24} color="white" />
+            <Ionicons name={foodIsFavorite ? 'star' : 'star-outline'} size={24} color="black" onPress={changeFavorite} />
           </Pressable>
         );
       },
     });
-  }, [navigation]);
+  }, [navigation,changeFavorite]);
 
   return (
     <ScrollView style={styles.rootContainer}>
@@ -73,7 +83,7 @@ const styles = StyleSheet.create({
   detailItem: {
     marginHorizontal: 4,
     fontSize: 12,
-    color: 'red',
+    color: 'gray',
   },
   listContainer: {
     width: '100%',
@@ -82,11 +92,11 @@ const styles = StyleSheet.create({
   subTitleContainer: {
     alignItems: 'center',
     borderBottomWidth: 2,
-    borderBottomColor: 'orange',
+    borderBottomColor: '#F4F4F2',
     marginVertical: 5,
   },
   subTitle: {
-    color: 'orange',
+    color: 'gray',
     fontSize: 24,
     fontWeight: 'bold',
   },

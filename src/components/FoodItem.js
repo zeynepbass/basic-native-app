@@ -8,9 +8,9 @@ export default function FoodItem({
   affordability,
   complexity,
 }) {
-  const navigation=useNavigation()
+  const navigation=useNavigation();
   const FoodItemHandler=()=>{
-    navigation.navigate('FoodDetails',{
+    navigation.navigate('FoodDetail',{
       foodId:id
     })
   }
